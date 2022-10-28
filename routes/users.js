@@ -1,6 +1,7 @@
 const { MongoClient, ObjectId } = require('mongodb');
 const express = require('express');
 const Joi = require('joi');
+const e = require('express');
 
 // Using this link as a guideline about what to do
 // https://www.restapitutorial.com/lessons/httpmethods.html
@@ -197,6 +198,7 @@ router.patch('/:id', async (req, res) => {
         const update = {
             $set: req.body
         }
+
         const options = {
             returnDocument: 'after'
         }
@@ -240,12 +242,12 @@ router.delete('/:id', async (req, res) => {
             _id: new ObjectId(id)
         }
 
-        const deleteResult = await users.deleteOne(filter)
+        const deleteResult = await users.findOneAndDelete(filter)
 
-        if (deleteResult.deletedCount === 0)
-            res.status(404).send();
+        if (deleteResult.value)
+            res.send(deleteResult.value);
         else
-            res.status(204).send(deleteResult);
+            res.status(404).send();
 
     }
     finally {
