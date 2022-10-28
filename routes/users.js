@@ -7,10 +7,6 @@ const Joi = require('joi');
 
 router = express.Router()
 
-// Replace the uri string with your connection string.
-const dbUri =
-    'mongodb+srv://abhiroop25902:Abhiroopm25902@cluster1.yxbqg3u.mongodb.net/?retryWrites=true&w=majority';
-
 // validate the request to have only {name: string} and noting else
 function validatePostRequest(req_body) {
     const schema = Joi.object({
@@ -25,7 +21,7 @@ router.post('/', async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     // NOTE: connection to DB does not happen here
-    const dbClient = new MongoClient(dbUri);
+    const dbClient = new MongoClient(process.env.DATABASE_URI);
 
     try {
         // connection to DB happens in the next line
@@ -64,7 +60,7 @@ router.get('/', async (req, res) => {
     const page = req.query.page || 1;
     const LIMIT_SIZE = 2;
 
-    const dbClient = new MongoClient(dbUri);
+    const dbClient = new MongoClient(process.env.DATABASE_URI);
 
     try {
         // connection to DB happens in the next line
@@ -82,7 +78,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-    const dbClient = new MongoClient(dbUri);
+    const dbClient = new MongoClient(process.env.DATABASE_URI);
 
     const id = req.params.id
     //check id to be of 24 characters
@@ -134,7 +130,7 @@ router.put('/:id', async (req, res) => {
     const { error } = validatePutRequest(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    const dbClient = new MongoClient(dbUri);
+    const dbClient = new MongoClient(process.env.DATABASE_URI);
 
 
     try {
@@ -187,7 +183,7 @@ router.patch('/:id', async (req, res) => {
     if (error)
         return res.status(400).send(error.details[0].message);
 
-    const dbClient = new MongoClient(dbUri);
+    const dbClient = new MongoClient(process.env.DATABASE_URI);
 
     try {
         // connection to DB happens in the next line
@@ -233,7 +229,7 @@ router.delete('/:id', async (req, res) => {
         return;
     }
 
-    const dbClient = new MongoClient(dbUri);
+    const dbClient = new MongoClient(process.env.DATABASE_URI);
 
     try {
         // connection to DB happens in the next line
