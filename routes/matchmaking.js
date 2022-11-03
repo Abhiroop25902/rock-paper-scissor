@@ -39,8 +39,8 @@ router.post('/:id', async (req, res) => {
 
     if (!player) res.status(404).send();
 
-    // first one reads ip from headers also
-    const request_ip = req.ip || req.connection.remoteAddress;
+    // first value is for proxy forwarded, it not proxy then remote address
+    const request_ip = req.headers['x-forwarded-for'] || req.ip;
 
     if (player_queue.length == 1 &&
         player_queue[0]._id !== req.params.id) //player already present 
