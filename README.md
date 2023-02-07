@@ -18,6 +18,7 @@ pm.test("Your test name", function () {
     pm.expect(jsonData.status).to.eql("UP");
 });
 ```
+![image](https://user-images.githubusercontent.com/69428539/217182328-c5821b62-ef45-4ed4-a170-afba6905edf2.png)
 
 ### GET on `/users`
 ```js
@@ -53,3 +54,5 @@ pm.test('Schema is valid', function () {
     pm.expect(tv4.validate(jsonData, schema)).to.be.true;
 });
 ```
+![image](https://user-images.githubusercontent.com/69428539/217183728-bebed5ce-78f8-4761-8d03-b8826aa769e2.png)
+
